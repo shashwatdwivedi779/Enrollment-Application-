@@ -1,0 +1,37 @@
+<!-- Student Sidebar -->
+<div class="sidebar" id="studentSidebar">
+    <div class="sidebar-brand">
+        <i class="bi bi-mortarboard-fill"></i>
+        <span>IGEC Sagar</span>
+    </div>
+    <div class="sidebar-label">STUDENT PANEL</div>
+    <nav class="sidebar-nav">
+        <a href="/student/dashboard" class="sidebar-link <%= typeof activePage !== 'undefined' && activePage === 'dashboard' ? 'active' : '' %>">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="/student/profile" class="sidebar-link <%= typeof activePage !== 'undefined' && activePage === 'profile' ? 'active' : '' %>">
+            <i class="bi bi-person-circle"></i>
+            <span>My Profile</span>
+        </a>
+        <a href="/student/results" class="sidebar-link <%= typeof activePage !== 'undefined' && activePage === 'results' ? 'active' : '' %>">
+            <i class="bi bi-bar-chart-line-fill"></i>
+            <span>Results</span>
+        </a>
+        <a href="/student/change-password" class="sidebar-link <%= typeof activePage !== 'undefined' && activePage === 'changePassword' ? 'active' : '' %>">
+            <i class="bi bi-key-fill"></i>
+            <span>Change Password</span>
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <i class="bi bi-person-fill"></i>
+            <span><%= typeof student !== 'undefined' ? student.fullName.split(' ')[0] : 'Student' %></span>
+        </div>
+        <form action="/student/logout" method="POST">
+            <button type="submit" class="btn btn-sm btn-outline-light w-100 mt-2">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+        </form>
+    </div>
+</div>

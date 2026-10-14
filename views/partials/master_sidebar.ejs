@@ -1,0 +1,29 @@
+<!-- Master Sidebar -->
+<div class="sidebar" id="masterSidebar">
+    <div class="sidebar-brand">
+        <i class="bi bi-mortarboard-fill"></i>
+        <span>IGEC Sagar</span>
+    </div>
+    <div class="sidebar-label">MASTER PANEL</div>
+    <nav class="sidebar-nav">
+        <a href="/master/dashboard" class="sidebar-link <%= typeof activePage !== 'undefined' && activePage === 'dashboard' ? 'active' : '' %>">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="/master/students" class="sidebar-link <%= typeof activePage !== 'undefined' && activePage === 'students' ? 'active' : '' %>">
+            <i class="bi bi-people-fill"></i>
+            <span>All Students</span>
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <i class="bi bi-shield-lock-fill"></i>
+            <span>Master Admin</span>
+        </div>
+        <form action="/master/logout" method="POST">
+            <button type="submit" class="btn btn-sm btn-outline-light w-100 mt-2">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+        </form>
+    </div>
+</div>

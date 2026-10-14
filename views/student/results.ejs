@@ -1,0 +1,39 @@
+<%- include('../partials/head', { pageTitle: 'Results' }) %>
+
+<div class="layout-wrapper">
+    <%- include('../partials/student_sidebar', { activePage: 'results', student }) %>
+
+    <div class="main-content">
+        <div class="topbar">
+            <h4><i class="bi bi-bar-chart-line-fill me-2 text-primary"></i>Results</h4>
+        </div>
+
+        <div class="page-content">
+            <%- include('../partials/flash_messages') %>
+
+            <div class="coming-soon-card">
+                <div class="coming-soon-icon">
+                    <i class="bi bi-bar-chart-line-fill"></i>
+                </div>
+                <h3>Results — Coming Soon</h3>
+                <p class="mt-2">
+                    Your academic results will be available here in a future update.
+                    Once published, you will be able to view your semester-wise marks,
+                    grades, and performance analytics directly from this section.
+                </p>
+                <div class="mt-4">
+                    <span class="badge bg-light text-secondary border py-2 px-3">
+                        <i class="bi bi-clock me-1"></i> Under Development
+                    </span>
+                </div>
+                <div class="mt-4">
+                    <a href="/student/dashboard" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <%- include('../partials/footer') %>
+    </div>
+</div>

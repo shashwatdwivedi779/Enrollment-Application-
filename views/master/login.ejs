@@ -1,0 +1,138 @@
+<%- include('../partials/head', { pageTitle: 'Master Login' }) %>
+
+<div class="auth-page">
+    <!-- Left branding panel -->
+    <div class="auth-left">
+        <div class="brand-logo"><i class="bi bi-mortarboard-fill"></i></div>
+        <h1>IGEC Sagar — Admin</h1>
+        <p>Secure administrative access for Indira Gandhi Engineering College, Sagar.</p>
+        <div class="auth-features">
+            <div class="auth-feature-item">
+                <i class="bi bi-shield-check"></i>
+                <span>Two-factor OTP verification</span>
+            </div>
+            <div class="auth-feature-item">
+                <i class="bi bi-people-fill"></i>
+                <span>Student registration management</span>
+            </div>
+            <div class="auth-feature-item">
+                <i class="bi bi-check2-circle"></i>
+                <span>Approve or reject applications</span>
+            </div>
+            <div class="auth-feature-item">
+                <i class="bi bi-envelope-check"></i>
+                <span>Automated credential emails</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right login form -->
+    <div class="auth-right">
+        <div class="auth-card">
+            <div class="card-header-text">
+                <div style="font-size:2.5rem; color: var(--primary); margin-bottom:.5rem;">
+                    <i class="bi bi-<%= otpSent ? 'shield-lock' : 'person-lock' %>"></i>
+                </div>
+                <h2><%= otpSent ? 'Enter OTP' : 'Master Login' %></h2>
+                <p>
+                    <% if (otpSent) { %>
+                        OTP sent to your registered email. Valid for 10 minutes.
+                    <% } else { %>
+                        Restricted access — Authorised personnel only.
+                    <% } %>
+                </p>
+            </div>
+
+            <%- include('../partials/flash_messages') %>
+
+            <% if (errors && errors.length > 0) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-x-circle-fill me-2"></i>
+                    <% errors.forEach(err => { %><div><%= err %></div><% }) %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <% } %>
+
+            <!-- ── Step 1: Email + Password ── -->
+            <% if (!otpSent) { %>
+            <form action="/master/login" method="POST" id="loginForm">
+                <div class="mb-3">
+                    <label class="form-label" for="masterEmail">Admin Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email" class="form-control" id="masterEmail"
+                               name="email" placeholder="admin@college.edu" required autofocus>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="masterPassword">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" class="form-control" id="masterPassword"
+                               name="password" placeholder="Enter your password" required>
+                        <button class="btn btn-outline-secondary" type="button" id="togglePwd"
+                                onclick="togglePassword('masterPassword','togglePwdIcon')">
+                            <i class="bi bi-eye" id="togglePwdIcon"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary-custom btn">
+                    <i class="bi bi-send me-2"></i>Send OTP
+                </button>
+            </form>
+            <% } %>
+
+            <!-- ── Step 2: OTP Verification ── -->
+            <% if (otpSent) { %>
+            <form action="/master/login" method="POST" id="otpForm">
+                <!-- Pass email through hidden field so OTP can be matched -->
+                <input type="hidden" name="email" value="<%= typeof email !== 'undefined' ? email : '' %>">
+                <div class="mb-4">
+                    <label class="form-label" for="otpInput">One-Time Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-key"></i></span>
+                        <input type="text" class="form-control form-control-lg text-center"
+                               id="otpInput" name="otp"
+                               placeholder="_ _ _ _ _ _"
+                               maxlength="6" pattern="[0-9]{6}"
+                               autocomplete="one-time-code"
+                               style="letter-spacing: 8px; font-weight:700; font-size:1.3rem;"
+                               required autofocus>
+                    </div>
+                    <div class="form-text">Enter the 6-digit OTP sent to your email.</div>
+                </div>
+                <button type="submit" class="btn-primary-custom btn">
+                    <i class="bi bi-shield-check me-2"></i>Verify & Login
+                </button>
+                <div class="text-center mt-3">
+                    <a href="/master/login" class="text-muted small">
+                        <i class="bi bi-arrow-left"></i> Back / Resend OTP
+                    </a>
+                </div>
+            </form>
+            <% } %>
+
+            <div class="text-center mt-4">
+                <a href="/student/login" class="text-muted small">
+                    <i class="bi bi-person-fill"></i> Student Login
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function togglePassword(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon  = document.getElementById(iconId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('bi-eye', 'bi-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.replace('bi-eye-slash', 'bi-eye');
+    }
+}
+</script>
+
+<%- include('../partials/footer') %>

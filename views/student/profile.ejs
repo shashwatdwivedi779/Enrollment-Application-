@@ -1,0 +1,169 @@
+<%- include('../partials/head', { pageTitle: 'My Profile' }) %>
+
+<div class="layout-wrapper">
+    <%- include('../partials/student_sidebar', { activePage: 'profile', student }) %>
+
+    <div class="main-content">
+        <div class="topbar">
+            <h4><i class="bi bi-person-circle me-2 text-primary"></i>My Profile</h4>
+        </div>
+
+        <div class="page-content">
+            <%- include('../partials/flash_messages') %>
+
+            <!-- Profile Header -->
+            <div class="welcome-card mb-4">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:64px;height:64px; background:rgba(255,255,255,.2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:2rem;">
+                        <%= student.fullName.charAt(0).toUpperCase() %>
+                    </div>
+                    <div>
+                        <h3 class="mb-0"><%= student.fullName %></h3>
+                        <div class="d-flex gap-3 mt-1" style="opacity:.85; font-size:.85rem;">
+                            <span><i class="bi bi-person-badge me-1"></i><%= student.rollNumber %></span>
+                            <span><i class="bi bi-cpu me-1"></i><%= student.branch %></span>
+                            <span><i class="bi bi-calendar me-1"></i><%= student.semesterYear %></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Personal Details -->
+                <div class="col-lg-6">
+                    <div class="detail-section">
+                        <div class="detail-section-header">
+                            <i class="bi bi-person-fill"></i>
+                            <h5>Personal Details</h5>
+                        </div>
+                        <div class="detail-body">
+                            <div class="detail-row">
+                                <div class="detail-label">Full Name</div>
+                                <div class="detail-value"><%= student.fullName %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Date of Birth</div>
+                                <div class="detail-value">
+                                    <%= new Date(student.dob).toLocaleDateString('en-IN', {
+                                        day:'2-digit', month:'long', year:'numeric'
+                                    }) %>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Gender</div>
+                                <div class="detail-value" style="text-transform:capitalize;"><%= student.gender %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Aadhar No.</div>
+                                <div class="detail-value"><code><%= student.aadhar %></code></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parent Details -->
+                <div class="col-lg-6">
+                    <div class="detail-section">
+                        <div class="detail-section-header">
+                            <i class="bi bi-people-fill"></i>
+                            <h5>Parent Details</h5>
+                        </div>
+                        <div class="detail-body">
+                            <div class="detail-row">
+                                <div class="detail-label">Father's Name</div>
+                                <div class="detail-value"><%= student.fatherName %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Mother's Name</div>
+                                <div class="detail-value"><%= student.motherName %></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-6">
+                    <div class="detail-section">
+                        <div class="detail-section-header">
+                            <i class="bi bi-telephone-fill"></i>
+                            <h5>Contact Information</h5>
+                        </div>
+                        <div class="detail-body">
+                            <div class="detail-row">
+                                <div class="detail-label">Email</div>
+                                <div class="detail-value"><%= student.email %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Phone</div>
+                                <div class="detail-value"><%= student.phone %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Address</div>
+                                <div class="detail-value"><%= student.address %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">City</div>
+                                <div class="detail-value"><%= student.city %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Pincode</div>
+                                <div class="detail-value"><%= student.pincode %></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Info -->
+                <div class="col-lg-6">
+                    <div class="detail-section">
+                        <div class="detail-section-header">
+                            <i class="bi bi-book-fill"></i>
+                            <h5>Academic Details</h5>
+                        </div>
+                        <div class="detail-body">
+                            <div class="detail-row">
+                                <div class="detail-label">Roll Number</div>
+                                <div class="detail-value"><code class="text-success fs-6"><%= student.rollNumber %></code></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Branch</div>
+                                <div class="detail-value"><%= student.branch %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Semester / Year</div>
+                                <div class="detail-value"><%= student.semesterYear %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">JEE Score</div>
+                                <div class="detail-value"><%= student.jeeScore || '—' %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Board (12th)</div>
+                                <div class="detail-value"><%= student.board12 %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">12th Roll No.</div>
+                                <div class="detail-value"><%= student.roll12 %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">12th %</div>
+                                <div class="detail-value"><strong><%= student.grade12 %>%</strong></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">10th %</div>
+                                <div class="detail-value"><strong><%= student.grade10 %>%</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info mt-3 d-flex gap-2">
+                <i class="bi bi-info-circle-fill mt-1"></i>
+                <span>Your academic details are verified and managed by the administration. To update any information, please contact the admin office.</span>
+            </div>
+        </div>
+
+        <%- include('../partials/footer') %>
+    </div>
+</div>

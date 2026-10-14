@@ -1,0 +1,225 @@
+<%- include('partials/head', { pageTitle: 'Student Registration' }) %>
+
+<div class="register-page">
+    <div class="container py-4">
+        <div style="max-width:860px; margin:auto;">
+
+            <!-- Header -->
+            <div class="register-header">
+                <div style="font-size:2rem; margin-bottom:.5rem;"><i class="bi bi-mortarboard-fill"></i></div>
+                <h1>Student Admission Registration</h1>
+                <p>Indira Gandhi Engineering College, Sagar &mdash; Fill in all required details accurately.</p>
+                <div style="margin-top:1rem;">
+                    <a href="/" style="color:rgba(255,255,255,.7); font-size:.82rem; text-decoration:none;">
+                        <i class="bi bi-arrow-left"></i> Back to Homepage
+                    </a>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+            <div class="register-form-card">
+
+                <% if (errors && errors.length > 0) { %>
+                <div class="alert alert-danger alert-dismissible fade show">
+                    <i class="bi bi-x-circle-fill me-2"></i>
+                    <ul class="mb-0 ps-3">
+                        <% errors.forEach(err => { %>
+                            <li><%= err %></li>
+                        <% }) %>
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                <% } %>
+
+                <form action="/register" method="POST" id="registrationForm" novalidate>
+
+                    <!-- ── Personal Information ── -->
+                    <div class="form-section-title">
+                        <i class="bi bi-person-fill"></i> Personal Information
+                    </div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label" for="fullName">Full Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="fullName" name="fullName"
+                                   placeholder="As per official documents"
+                                   value="<%= formData.fullName || '' %>" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label" for="dob">Date of Birth <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="dob" name="dob"
+                                   value="<%= formData.dob || '' %>" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label" for="gender">Gender <span class="text-danger">*</span></label>
+                            <select class="form-select" id="gender" name="gender" required>
+                                <option value="" disabled <%= !formData.gender ? 'selected' : '' %>>Select</option>
+                                <option value="male"   <%= formData.gender === 'male'   ? 'selected' : '' %>>Male</option>
+                                <option value="female" <%= formData.gender === 'female' ? 'selected' : '' %>>Female</option>
+                                <option value="other"  <%= formData.gender === 'other'  ? 'selected' : '' %>>Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="fatherName">Father's Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="fatherName" name="fatherName"
+                                   value="<%= formData.fatherName || '' %>" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="motherName">Mother's Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="motherName" name="motherName"
+                                   value="<%= formData.motherName || '' %>" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="aadhar">Aadhar Number <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="aadhar" name="aadhar"
+                                   placeholder="12-digit Aadhar number"
+                                   maxlength="12" pattern="[0-9]{12}"
+                                   value="<%= formData.aadhar || '' %>" required>
+                        </div>
+                    </div>
+
+                    <!-- ── Contact Information ── -->
+                    <div class="form-section-title">
+                        <i class="bi bi-telephone-fill"></i> Contact Information
+                    </div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label" for="email">Email Address <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="student@example.com"
+                                   value="<%= formData.email || '' %>" required>
+                            <div class="form-text">This email will receive your login credentials if approved.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="phone">Mobile Number <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                   placeholder="10-digit mobile number"
+                                   maxlength="10" pattern="[0-9]{10}"
+                                   value="<%= formData.phone || '' %>" required>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label" for="address">Address <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="address" name="address"
+                                   placeholder="House/Flat No., Street, Area"
+                                   value="<%= formData.address || '' %>" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label" for="city">City <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="city" name="city"
+                                   value="<%= formData.city || '' %>" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label" for="pincode">Pincode <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="pincode" name="pincode"
+                                   maxlength="6" pattern="[0-9]{6}"
+                                   value="<%= formData.pincode || '' %>" required>
+                        </div>
+                    </div>
+
+                    <!-- ── Academic Information ── -->
+                    <div class="form-section-title">
+                        <i class="bi bi-book-fill"></i> Academic Information
+                    </div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <label class="form-label" for="branch">Branch / Course <span class="text-danger">*</span></label>
+                            <select class="form-select" id="branch" name="branch" required>
+                                <option value="" disabled <%= !formData.branch ? 'selected' : '' %>>Select Branch</option>
+                                <option value="IT"  <%= formData.branch === 'IT'  ? 'selected' : '' %>>Information Technology (IT)</option>
+                                <option value="CE"  <%= formData.branch === 'CE'  ? 'selected' : '' %>>Computer Engineering (CE)</option>
+                                <option value="ME"  <%= formData.branch === 'ME'  ? 'selected' : '' %>>Mechanical Engineering (ME)</option>
+                                <option value="ECE" <%= formData.branch === 'ECE' ? 'selected' : '' %>>Electronics & Communication (ECE)</option>
+                                <option value="EE"  <%= formData.branch === 'EE'  ? 'selected' : '' %>>Electrical Engineering (EE)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="semesterYear">Semester / Year <span class="text-danger">*</span></label>
+                            <select class="form-select" id="semesterYear" name="semesterYear" required>
+                                <option value="" disabled <%= !formData.semesterYear ? 'selected' : '' %>>Select</option>
+                                <option value="1st Year / Sem 1" <%= formData.semesterYear === '1st Year / Sem 1' ? 'selected' : '' %>>1st Year / Sem 1</option>
+                                <option value="1st Year / Sem 2" <%= formData.semesterYear === '1st Year / Sem 2' ? 'selected' : '' %>>1st Year / Sem 2</option>
+                                <option value="2nd Year / Sem 3" <%= formData.semesterYear === '2nd Year / Sem 3' ? 'selected' : '' %>>2nd Year / Sem 3</option>
+                                <option value="2nd Year / Sem 4" <%= formData.semesterYear === '2nd Year / Sem 4' ? 'selected' : '' %>>2nd Year / Sem 4</option>
+                                <option value="3rd Year / Sem 5" <%= formData.semesterYear === '3rd Year / Sem 5' ? 'selected' : '' %>>3rd Year / Sem 5</option>
+                                <option value="3rd Year / Sem 6" <%= formData.semesterYear === '3rd Year / Sem 6' ? 'selected' : '' %>>3rd Year / Sem 6</option>
+                                <option value="4th Year / Sem 7" <%= formData.semesterYear === '4th Year / Sem 7' ? 'selected' : '' %>>4th Year / Sem 7</option>
+                                <option value="4th Year / Sem 8" <%= formData.semesterYear === '4th Year / Sem 8' ? 'selected' : '' %>>4th Year / Sem 8</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="jeeScore">JEE Score (if applicable)</label>
+                            <input type="number" class="form-control" id="jeeScore" name="jeeScore"
+                                   min="0" max="300" placeholder="0–300"
+                                   value="<%= formData.jeeScore || '' %>">
+                        </div>
+                    </div>
+
+                    <!-- ── Class 12th Details ── -->
+                    <div class="form-section-title">
+                        <i class="bi bi-award-fill"></i> Class 12th Details
+                    </div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <label class="form-label" for="board12">Board <span class="text-danger">*</span></label>
+                            <select class="form-select" id="board12" name="board12" required>
+                                <option value="" disabled <%= !formData.board12 ? 'selected' : '' %>>Select Board</option>
+                                <option value="MPBSE" <%= formData.board12 === 'MPBSE' ? 'selected' : '' %>>MPBSE</option>
+                                <option value="CBSE"  <%= formData.board12 === 'CBSE'  ? 'selected' : '' %>>CBSE</option>
+                                <option value="ICSE"  <%= formData.board12 === 'ICSE'  ? 'selected' : '' %>>ICSE</option>
+                                <option value="Other" <%= formData.board12 === 'Other' ? 'selected' : '' %>>Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="roll12">Roll Number (12th) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="roll12" name="roll12"
+                                   value="<%= formData.roll12 || '' %>" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="grade12">Percentage (12th) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="grade12" name="grade12"
+                                       min="0" max="100" step="0.01" placeholder="e.g. 85.5"
+                                       value="<%= formData.grade12 || '' %>" required>
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── Class 10th Details ── -->
+                    <div class="form-section-title">
+                        <i class="bi bi-journal-check"></i> Class 10th Details
+                    </div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <label class="form-label" for="grade10">Percentage (10th) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="grade10" name="grade10"
+                                       min="0" max="100" step="0.01" placeholder="e.g. 82.0"
+                                       value="<%= formData.grade10 || '' %>" required>
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <p class="text-muted small mb-0">
+                            <span class="text-danger">*</span> Required fields. All submitted information is subject to verification.
+                        </p>
+                        <button type="submit" class="btn-primary-custom btn" style="width:auto; padding:.7rem 2.5rem;">
+                            <i class="bi bi-send-fill me-2"></i>Submit Application
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="/student/login" class="text-muted small">
+                    Already have an account? <strong>Login here</strong>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
